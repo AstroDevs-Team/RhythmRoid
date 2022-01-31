@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:orientation="vertical"
+    tools:context=".GetIp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/_16sdp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="RhythmRoid"
+            android:textColor="#E6EEFF"
+            android:textSize="@dimen/_30ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aiofall"
+            android:textColor="#5400F9"
+            android:textSize="@dimen/_15ssp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:orientation="vertical"
+>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please input your local host IP"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_15ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:alpha="0.7"
+            android:text="Example: 127.0.0.1"
+            android:textColor="#ffffff" />
+
+        <EditText
+            android:id="@+id/ip_ed"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:background="@drawable/text_ed_bg"
+            android:inputType="number"
+            android:digits="1234567890."
+            android:padding="5dp"
+            android:textColor="#ffffff"
+            android:textCursorDrawable="@drawable/cursor_ed" />
+
+    </LinearLayout>
+
+    <com.royrodriguez.transitionbutton.TransitionButton
+        android:id="@+id/transition_button"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Check the IP"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+</LinearLayout>

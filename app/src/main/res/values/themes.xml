@@ -1,0 +1,20 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.RhythmRoid" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/purple_700</item>
+        <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimaryDark">#080899</item>
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+
+
+</resources>
