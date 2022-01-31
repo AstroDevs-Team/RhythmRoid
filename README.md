@@ -13,11 +13,12 @@ Rhythmroid is a remote android application for Rhythmbox on Linux. Rhythmroid he
 
 ## Using Rhythmroid
 1. Download the Rhythmroid APK file from the latest release page and install it on your Android phone.
-2. Find your computer's local IP through the ``hostname -I | awk '{print $1}'`` command in the terminal.
-3. Clone the repository and open a terminal and cd in the **api** folder.
-4. Run the api service using the ``python3 manange.py runserver 0.0.0.0:8000`` command.
-5. Open Rhythmbox on your computer and Rhythmroid on Android and put your Local IP (IPv4) in Rhythmroid.
-6. All done!
+2. Clone the repository and open a terminal and cd in the **api** folder.
+3. Find your computer's local IP through the ``hostname -I | awk '{print $1}'`` command in the terminal.
+4. Add your IPv4 to the `api/rhythmroid/settings.py` file and to the `ALLOWED_HOSTS` variable. For example : ``ALLOWED_HOSTS = ['192.168.1.6']``
+5. Run the api service using the ``python3 manage.py runserver 0.0.0.0:8000`` command.
+6. Open Rhythmbox on your computer and Rhythmroid on Android and put your Local IP (IPv4) in Rhythmroid.
+7. All done!
 
 ## Screenshots
 <img style='border-radius: 5%;' src="https://raw.githubusercontent.com/AioFall/RhythmRoid/main/assets/screenshot1.png" alt="Screenshot-1">
