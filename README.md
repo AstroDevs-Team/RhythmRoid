@@ -19,5 +19,10 @@ Rhythmroid is a remote android application for Rhythmbox on Linux. Rhythmroid he
 5. Open Rhythmbox on your computer and Rhythmroid on Android and put your Local IP (IPv4) in Rhythmroid.
 6. All done!
 
+## Screenshots
+<img style='border-radius: 5%;' src="https://raw.githubusercontent.com/AioFall/RhythmRoid/main/assets/screenshot1.png" alt="Screenshot-1">
+
+<img style='border-radius: 5%;' src="https://raw.githubusercontent.com/AioFall/RhythmRoid/main/assets/screenshot2.png" alt="Screenshot-2">
+
 ## License
 This project is under GNU GPLv3 license and be sure to pay attention to the conditions and rules mentioned when using this project.
