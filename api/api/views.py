@@ -1,12 +1,13 @@
 import io
 import os
-import stagger
+import mutagen
 import urllib.parse
 import subprocess
 from PIL import Image
 from bs4 import BeautifulSoup
 from django.http import JsonResponse
 from rhythmroid.settings import STATIC_URL
+from mutagen.id3 import ID3, APIC
 
 def initial(request):
     return JsonResponse({'result': False, 'description': 'RhythmRoid api main page.'})
@@ -29,7 +30,7 @@ def playing_status(request, manual_run=False):
         rhythmbox_db_xml = rhythmbox_db.read()
         rhythmbox_db.close()
 
-    soup = BeautifulSoup(rhythmbox_db_xml, 'xml')
+    soup = BeautifulSoup(rhythmbox_db_xml, features='xml')
 
     songs = soup.find_all('entry', {'type': 'song'})
 
@@ -40,19 +41,24 @@ def playing_status(request, manual_run=False):
         'rhythmbox-client --no-start --print-volume'.split()
     )
 
-    play_status = subprocess.check_output(
-        gdbus_get('PlaybackStatus'),
-        shell=True
-    )
+    try:
+        play_status = subprocess.check_output(
+            gdbus_get('PlaybackStatus'),
+            shell=True
+        )
 
-    play_position = subprocess.check_output(
-        gdbus_get('Position'),
-        shell=True
-    )
+        play_position = subprocess.check_output(
+            gdbus_get('Position'),
+            shell=True
+        )
+    except:
+        META['result'] = False
+        META['description'] = 'rythmbox is not started playing'
 
     music_meta = title.decode('UTF-8').strip().split('-')
-    
+
     META = {
+        'result': True,
         'meta': {
             'title': '-'.join(music_meta[1:]).strip(),
             'singer': music_meta[0].strip()
@@ -65,6 +71,8 @@ def playing_status(request, manual_run=False):
     }
 
     for song in songs:
+        if not META['result']:
+            break
         if song.find('title').text.strip() == music_meta[1].strip():
             META['meta']['album'] = song.find('album').text.strip()
             META['meta']['genre'] = song.find('genre').text.strip()
@@ -79,12 +87,15 @@ def playing_status(request, manual_run=False):
             images_path = __file__.split(os.sep)[:-2]+['images']
             generated_image_path = os.path.sep.join(images_path+[META['meta']['title']+'.jpg'])
             if not os.path.isfile(generated_image_path):
-                mp3_get = stagger.read_tag(
-                    urllib.parse.unquote(song.find('location').text.strip().replace('file://', ''))
+                audio_file = mutagen.File(
+                    urllib.parse.unquote(song.find('location').text.strip().replace('file://', '')),
+                    easy=False
                 )
                 try:
-                    mp3_data = mp3_get[stagger.id3.APIC][0].data
-                    Image.open(io.BytesIO(mp3_data)).save(generated_image_path)
+                    if audio_file.tags and APIC in audio_file.tags:
+                        apic = audio_file.tags[APIC][0]  # Get the first APIC frame
+                        mp3_data = apic.data
+                        Image.open(io.BytesIO(mp3_data)).save(generated_image_path)
                 except KeyError as key_error:
                     META['meta']['image'] = '/{}{}'.format(STATIC_URL, 'default.jpg')
             if 'image' not in META['meta']:
@@ -94,7 +105,6 @@ def playing_status(request, manual_run=False):
                 )        
 
             break
-
 
     return JsonResponse(META) if not manual_run else META
 
@@ -141,7 +151,6 @@ def play_actions(request):
         META['result'], META['description'] = False, 'Unknown action received'
         return JsonResponse(META)
     
-    META ['status'] = playing_status(request, manual_run=True)
-    
+    if action not in ['stop']:
+        META ['status'] = playing_status(request, manual_run=True)
     return JsonResponse(META)
-
