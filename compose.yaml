@@ -1,0 +1,14 @@
+services:
+  rhythmroid:
+    build: ./api
+    ports:
+      - "8000:8000"
+    user: "${HOST_UID}:${HOST_GID}"
+    environment:
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${HOST_UID}/bus
+    volumes:
+      - /run/user/${HOST_UID}:/run/user/${HOST_UID}
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+      - ${HOME}:${HOME}:ro
+      - ./api/images:/app/images

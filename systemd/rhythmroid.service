@@ -1,0 +1,18 @@
+[Unit]
+Description=RhythmRoid API
+Documentation=https://github.com/AstroDevs-Team/RhythmRoid
+After=graphical-session.target
+
+[Service]
+Type=simple
+WorkingDirectory=__WORKING_DIR__
+Environment="HOST_UID=__UID__"
+Environment="HOST_GID=__GID__"
+Environment="HOME=__HOME__"
+Environment="DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/__UID__/bus"
+ExecStart=__DOCKER__ compose up
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

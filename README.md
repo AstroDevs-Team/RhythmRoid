@@ -71,33 +71,62 @@ lib/
 
 ### Prerequisites
 - A Linux machine with [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) installed and running
+- Docker and Docker Compose v2
 - Flutter installed on your development machine
 - An Android phone on the same local network
 
 ### Backend (on your Linux machine)
 
-You can run the backend with Docker (recommended) or directly with Python.
-
 <details open>
-<summary><strong>Option A — Docker (recommended)</strong></summary>
+<summary><strong>Option A — Docker + systemd auto-start (recommended)</strong></summary>
 
-**Requires:** Docker and Docker Compose v2
+Run once to build the image and register a systemd user service that starts automatically on login:
 
 ```bash
 git clone https://github.com/AstroDevs-Team/RhythmRoid.git
 cd RhythmRoid
-chmod +x start.sh
-./start.sh
+./install.sh
 ```
 
-The script automatically detects your user ID so the container can reach Rhythmbox over DBus. The API will be available at `http://localhost:8000`.
+The script prompts to enable the service on login. Once enabled, the API comes up automatically every time you log in — no manual action needed.
+
+**Managing the service:**
+
+```bash
+systemctl --user start rhythmroid      # start
+systemctl --user stop rhythmroid       # stop
+systemctl --user restart rhythmroid    # restart
+systemctl --user status rhythmroid     # status
+journalctl --user -u rhythmroid -f     # follow logs
+```
+
+**Uninstall:**
+
+```bash
+systemctl --user disable --now rhythmroid
+rm ~/.config/systemd/user/rhythmroid.service
+systemctl --user daemon-reload
+```
+
+</details>
+
+<details>
+<summary><strong>Option B — Docker one-shot</strong></summary>
+
+Start manually without systemd — useful for testing:
+
+```bash
+git clone https://github.com/AstroDevs-Team/RhythmRoid.git
+cd RhythmRoid
+./start.sh
+```
 
 To stop: `docker compose down`
 
 </details>
 
 <details>
-<summary><strong>Option B — Direct (Python only)</strong></summary>
+<summary><strong>Option C — Direct Python (no Docker)</strong></summary>
 
 **Requires:** Python 3.8+, `libglib2.0-bin` (provides `gdbus` — pre-installed on most GNOME desktops)
 
@@ -109,6 +138,8 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 </details>
+
+The API is available at `http://<your-local-ip>:8000` once running.
 
 ### App (Flutter)
 ```bash
@@ -173,7 +204,7 @@ Check the [Issues](https://github.com/AstroDevs-Team/RhythmRoid/issues) tab for 
 | Rhythmbox control | MPRIS2 over DBus (`gdbus`) |
 | Metadata / album art | `mutagen`, `Pillow` |
 | Library database | `beautifulsoup4` (reads `rhythmdb.xml`) |
-| Containerization | Docker + Docker Compose |
+| Containerization | Docker + Docker Compose + systemd user service |
 
 **App (Flutter)**
 
