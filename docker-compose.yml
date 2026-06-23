@@ -1,0 +1,28 @@
+services:
+  rhythmroid:
+    build: ./api
+    ports:
+      - "8000:8000"
+
+    # Must match the host user's UID/GID so the DBus session socket is accessible.
+    # start.sh sets these automatically via $(id -u) / $(id -g).
+    user: "${HOST_UID}:${HOST_GID}"
+
+    environment:
+      - DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/${HOST_UID}/bus
+
+    volumes:
+      # DBus session socket
+      - /run/user/${HOST_UID}:/run/user/${HOST_UID}
+
+      # User identity — lets Path.home() resolve correctly inside the container
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+
+      # Home directory (rhythmdb.xml + music files must be at the same paths as on host)
+      - ${HOME}:${HOME}:ro
+
+      # Writable volume for generated album-art images
+      - ./api/images:/app/images
+
+    restart: unless-stopped

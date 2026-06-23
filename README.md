@@ -6,7 +6,7 @@ Remote controller for Rhythmbox on Linux — built with Flutter.
 
 <br>
 
-[![My Skills](https://skillicons.dev/icons?i=flutter,dart,python,fastapi,linux)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=flutter,dart,python,fastapi,docker,linux)](https://skillicons.dev)
 
 <br>
 
@@ -70,18 +70,45 @@ lib/
 ## 🏁 Getting Started
 
 ### Prerequisites
-- A Linux machine running [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox)
-- Python 3.8+ installed
+- A Linux machine with [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) installed and running
 - Flutter installed on your development machine
 - An Android phone on the same local network
 
 ### Backend (on your Linux machine)
+
+You can run the backend with Docker (recommended) or directly with Python.
+
+<details open>
+<summary><strong>Option A — Docker (recommended)</strong></summary>
+
+**Requires:** Docker and Docker Compose v2
+
+```bash
+git clone https://github.com/AstroDevs-Team/RhythmRoid.git
+cd RhythmRoid
+chmod +x start.sh
+./start.sh
+```
+
+The script automatically detects your user ID so the container can reach Rhythmbox over DBus. The API will be available at `http://localhost:8000`.
+
+To stop: `docker compose down`
+
+</details>
+
+<details>
+<summary><strong>Option B — Direct (Python only)</strong></summary>
+
+**Requires:** Python 3.8+, `libglib2.0-bin` (provides `gdbus` — pre-installed on most GNOME desktops)
+
 ```bash
 git clone https://github.com/AstroDevs-Team/RhythmRoid.git
 cd RhythmRoid/api
 pip install -r requirements.txt
 uvicorn main:app --host 0.0.0.0 --port 8000
 ```
+
+</details>
 
 ### App (Flutter)
 ```bash
@@ -137,6 +164,18 @@ Check the [Issues](https://github.com/AstroDevs-Team/RhythmRoid/issues) tab for 
 - [ ] Multiple server profiles
 
 ## 📦 Tech Stack
+
+**Backend**
+
+| Concern | Tool |
+|---|---|
+| API framework | `FastAPI` + `uvicorn` |
+| Rhythmbox control | MPRIS2 over DBus (`gdbus`) |
+| Metadata / album art | `mutagen`, `Pillow` |
+| Library database | `beautifulsoup4` (reads `rhythmdb.xml`) |
+| Containerization | Docker + Docker Compose |
+
+**App (Flutter)**
 
 | Concern | Package |
 |---|---|
