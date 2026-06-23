@@ -6,7 +6,7 @@ Remote controller for Rhythmbox on Linux — built with Flutter.
 
 <br>
 
-[![My Skills](https://skillicons.dev/icons?i=flutter,dart,python,django,linux)](https://skillicons.dev)
+[![My Skills](https://skillicons.dev/icons?i=flutter,dart,python,fastapi,linux)](https://skillicons.dev)
 
 <br>
 
@@ -71,7 +71,7 @@ lib/
 
 ### Prerequisites
 - A Linux machine running [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox)
-- Python 3 installed
+- Python 3.8+ installed
 - Flutter installed on your development machine
 - An Android phone on the same local network
 
@@ -79,7 +79,8 @@ lib/
 ```bash
 git clone https://github.com/AstroDevs-Team/RhythmRoid.git
 cd RhythmRoid/api
-python3 manage.py runserver 0.0.0.0:8000
+pip install -r requirements.txt
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 ### App (Flutter)

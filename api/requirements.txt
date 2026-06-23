@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+mutagen
+Pillow
+beautifulsoup4
+lxml
