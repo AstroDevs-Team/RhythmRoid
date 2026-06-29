@@ -1,6 +1,6 @@
 <div align='center'>
 
-# <img width="180" src="https://github.com/AioFall/RhythmRoid/raw/main/assets/logo.png" alt="RhythmRoid"> <br> RhythmRoid
+# <img width="180" src="https://github.com/AstroDevs-Team/RhythmRoid/raw/main/app/assets/images/logo.png" alt="RhythmRoid"> <br> RhythmRoid
 
 Remote controller for Rhythmbox on Linux — built with Flutter.
 
@@ -37,10 +37,10 @@ Originally built 4 years ago in Java with messy unstructured code — now being 
 
 ## Features
 
-- 🎵 Play, pause, next, previous — control Rhythmbox from your phone
-- 🌐 Connect via local IP — no internet needed
-- 🎨 Clean minimal UI with a proper design system
-- 🌙 Light & dark mode support
+- 🎵 Player screen UI for play, pause, next, previous, album art, and progress
+- 🌐 Connection screen UI for entering a local IP
+- 🎨 Dark Flutter UI with centralized color, typography, and spacing tokens
+- 🧭 GoRouter-based navigation between connection and player screens
 - 🏗️ Feature-first folder structure
 - 🤝 Open source — built with the community
 
@@ -52,18 +52,12 @@ lib/
 │   ├── config/
 │   │   ├── theme/          # Colors, typography, spacing
 │   │   └── router/         # GoRouter setup
-│   ├── network/            # Dio client, API handling
-│   └── widgets/            # Shared reusable widgets
 ├── features/
-│   ├── connection/         # IP form, connect/disconnect logic
-│   │   ├── connection_page.dart
-│   │   ├── connection_cubit.dart
-│   │   └── connection_state.dart
-│   └── player/             # Music controls, now playing UI
-│       ├── player_page.dart
-│       ├── player_cubit.dart
-│       ├── player_state.dart
-│       └── widgets/
+│   ├── connection/         # IP form UI
+│   │   └── presentation/
+│   │       └── connection_page.dart
+│   └── player/             # Music controls and now playing UI
+│       └── player_page.dart
 └── main.dart
 ```
 
@@ -143,12 +137,12 @@ The API is available at `http://<your-local-ip>:8000` once running.
 
 ### App (Flutter)
 ```bash
-cd RhythmRoid
+cd RhythmRoid/app
 flutter pub get
 flutter run
 ```
 
-Then open the app, enter your machine's local IP, and you're connected.
+Then open the app and enter your machine's local IP. Real backend connection handling is still part of the rewrite work.
 
 ## Screenshots
 
@@ -182,9 +176,11 @@ Check the [Issues](https://github.com/AstroDevs-Team/RhythmRoid/issues) tab for 
 
 ## 🗺️ Roadmap
 
-- [ ] Project setup — Flutter, feature-first structure, design system
-- [ ] Connection page — IP input, connect/disconnect
-- [ ] Player page — play, pause, next, previous, album art
+- [x] Project setup — Flutter, feature-first structure, design system
+- [x] Connection page UI — IP input screen
+- [x] Player page UI — play, pause, next, previous, album art, progress
+- [ ] Backend connection handling from the Flutter app
+- [ ] Real playback controls through the API
 - [ ] Volume control
 - [ ] Now playing progress bar with seek
 - [ ] Queue / playlist view
@@ -211,9 +207,8 @@ Check the [Issues](https://github.com/AstroDevs-Team/RhythmRoid/issues) tab for 
 | Concern | Package |
 |---|---|
 | Navigation | `go_router` |
-| State Management | `flutter_bloc` |
-| Networking | `dio` |
-| Dependency Injection | `get_it` |
+| Responsive sizing | `flutter_screenutil` |
+| Player progress UI | `audio_video_progress_bar` |
 
 ## Looking for the old Java version?
 

@@ -11,7 +11,7 @@ abstract class AppTheme {
       seedColor: AppColors.primary,
       brightness: Brightness.dark,
     ),
-    appBarTheme: const AppBarTheme(backgroundColor: Colors.transparent),
+    appBarTheme: const AppBarTheme(backgroundColor: AppColors.transparent),
     textTheme: const TextTheme(
       displayLarge: AppTextStyles.displayLarge,
       displayMedium: AppTextStyles.displayMedium,

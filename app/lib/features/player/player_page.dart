@@ -46,11 +46,11 @@ class _PlayerPageState extends State<PlayerPage> {
 
                         stops: [0.0, 0.18, 0.5, 0.82, 1.0],
                         colors: [
-                          Colors.black,
-                          Colors.transparent,
-                          Colors.transparent,
-                          Colors.transparent,
-                          Colors.black,
+                          AppColors.primary,
+                          AppColors.transparent,
+                          AppColors.transparent,
+                          AppColors.transparent,
+                          AppColors.primary,
                         ],
                       ),
                     ),
